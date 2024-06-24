@@ -70,6 +70,7 @@
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/7.7.利用null_resource搭配replace_triggered_by更新无法读取的属性.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/7.8.创建资源的条件依赖另一个资源的输出时怎么办.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/7.9.利用create_before_destroy调整资源update执行的顺序.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://lonegunmanb.github.io/introduction-terraform/7.10.terraform与自动化.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/8.CloudPosse最佳实践.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/9.后记.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 </urlset>
