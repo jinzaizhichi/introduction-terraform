@@ -1,0 +1,1578 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>利用 create_before_destroy 调整资源 Update 的执行顺序 · 《Terraform入门教程》</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="大可不加冰">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-vsc-dark-plus.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-image-captions/image-captions.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="10.terraform与自动化.html" />
+    
+    
+    <link rel="prev" href="8.创建资源的条件依赖另一个资源的输出时怎么办.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                        <b>1.1.</b>
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../1.Terraform初步体验/">
+            
+                <a href="../1.Terraform初步体验/">
+            
+                    
+                        <b>1.2.</b>
+                    
+                    Terraform 初步体验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                        <b>1.3.</b>
+                    
+                    Terraform基础概念
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../2.Terraform基础概念/1.Provider.html">
+            
+                <a href="../2.Terraform基础概念/1.Provider.html">
+            
+                    
+                        <b>1.3.1.</b>
+                    
+                    Provider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../2.Terraform基础概念/2.状态管理.html">
+            
+                <a href="../2.Terraform基础概念/2.状态管理.html">
+            
+                    
+                        <b>1.3.2.</b>
+                    
+                    状态管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../3.Terraform代码的书写/">
+            
+                <a href="../3.Terraform代码的书写/">
+            
+                    
+                        <b>1.4.</b>
+                    
+                    Terraform 代码的书写
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../3.Terraform代码的书写/1.类型.html">
+            
+                <a href="../3.Terraform代码的书写/1.类型.html">
+            
+                    
+                        <b>1.4.1.</b>
+                    
+                    类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../3.Terraform代码的书写/2.配置语法.html">
+            
+                <a href="../3.Terraform代码的书写/2.配置语法.html">
+            
+                    
+                        <b>1.4.2.</b>
+                    
+                    配置语法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../3.Terraform代码的书写/3.输入变量.html">
+            
+                <a href="../3.Terraform代码的书写/3.输入变量.html">
+            
+                    
+                        <b>1.4.3.</b>
+                    
+                    输入变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../3.Terraform代码的书写/4.输出值.html">
+            
+                <a href="../3.Terraform代码的书写/4.输出值.html">
+            
+                    
+                        <b>1.4.4.</b>
+                    
+                    输出值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../3.Terraform代码的书写/5.局部值.html">
+            
+                <a href="../3.Terraform代码的书写/5.局部值.html">
+            
+                    
+                        <b>1.4.5.</b>
+                    
+                    局部值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../3.Terraform代码的书写/6.资源.html">
+            
+                <a href="../3.Terraform代码的书写/6.资源.html">
+            
+                    
+                        <b>1.4.6.</b>
+                    
+                    资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../3.Terraform代码的书写/7.数据源.html">
+            
+                <a href="../3.Terraform代码的书写/7.数据源.html">
+            
+                    
+                        <b>1.4.7.</b>
+                    
+                    数据源
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../3.Terraform代码的书写/8.表达式.html">
+            
+                <a href="../3.Terraform代码的书写/8.表达式.html">
+            
+                    
+                        <b>1.4.8.</b>
+                    
+                    表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../3.Terraform代码的书写/9.重载文件.html">
+            
+                <a href="../3.Terraform代码的书写/9.重载文件.html">
+            
+                    
+                        <b>1.4.9.</b>
+                    
+                    重载文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../3.Terraform代码的书写/10.代码风格规范.html">
+            
+                <a href="../3.Terraform代码的书写/10.代码风格规范.html">
+            
+                    
+                        <b>1.4.10.</b>
+                    
+                    代码风格规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../3.Terraform代码的书写/11.checks.html">
+            
+                <a href="../3.Terraform代码的书写/11.checks.html">
+            
+                    
+                        <b>1.4.11.</b>
+                    
+                    Checks
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../4.Terraform文件与目录/">
+            
+                <a href="../4.Terraform文件与目录/">
+            
+                    
+                        <b>1.5.</b>
+                    
+                    Terraform 文件与目录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../4.Terraform文件与目录/1.override_file.html">
+            
+                <a href="../4.Terraform文件与目录/1.override_file.html">
+            
+                    
+                        <b>1.5.1.</b>
+                    
+                    Override 文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../4.Terraform文件与目录/2.依赖锁文件.html">
+            
+                <a href="../4.Terraform文件与目录/2.依赖锁文件.html">
+            
+                    
+                        <b>1.5.2.</b>
+                    
+                    依赖锁文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../4.Terraform文件与目录/3.测试文件.html">
+            
+                <a href="../4.Terraform文件与目录/3.测试文件.html">
+            
+                    
+                        <b>1.5.3.</b>
+                    
+                    测试文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../5.Terraform模块/">
+            
+                <a href="../5.Terraform模块/">
+            
+                    
+                        <b>1.6.</b>
+                    
+                    Terraform 模块
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../5.Terraform模块/1.创建模块.html">
+            
+                <a href="../5.Terraform模块/1.创建模块.html">
+            
+                    
+                        <b>1.6.1.</b>
+                    
+                    创建模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../5.Terraform模块/2.使用模块.html">
+            
+                <a href="../5.Terraform模块/2.使用模块.html">
+            
+                    
+                        <b>1.6.2.</b>
+                    
+                    使用模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../5.Terraform模块/3.模块元参数.html">
+            
+                <a href="../5.Terraform模块/3.模块元参数.html">
+            
+                    
+                        <b>1.6.3.</b>
+                    
+                    模块元参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../5.Terraform模块/4.重构.html">
+            
+                <a href="../5.Terraform模块/4.重构.html">
+            
+                    
+                        <b>1.6.4.</b>
+                    
+                    重构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../5.Terraform模块/5.设计新模块的模式.html">
+            
+                <a href="../5.Terraform模块/5.设计新模块的模式.html">
+            
+                    
+                        <b>1.6.5.</b>
+                    
+                    设计新模块的模式
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../6.Terraform命令行/">
+            
+                <a href="../6.Terraform命令行/">
+            
+                    
+                        <b>1.7.</b>
+                    
+                    Terraform 命令行
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../6.Terraform命令行/1.命令行配置文件.html">
+            
+                <a href="../6.Terraform命令行/1.命令行配置文件.html">
+            
+                    
+                        <b>1.7.1.</b>
+                    
+                    命令行配置文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../6.Terraform命令行/2.环境变量.html">
+            
+                <a href="../6.Terraform命令行/2.环境变量.html">
+            
+                    
+                        <b>1.7.2.</b>
+                    
+                    环境变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../6.Terraform命令行/3.资源地址.html">
+            
+                <a href="../6.Terraform命令行/3.资源地址.html">
+            
+                    
+                        <b>1.7.3.</b>
+                    
+                    资源地址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../6.Terraform命令行/4.apply.html">
+            
+                <a href="../6.Terraform命令行/4.apply.html">
+            
+                    
+                        <b>1.7.4.</b>
+                    
+                    apply
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../6.Terraform命令行/5.console.html">
+            
+                <a href="../6.Terraform命令行/5.console.html">
+            
+                    
+                        <b>1.7.5.</b>
+                    
+                    console
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../6.Terraform命令行/6.destroy.html">
+            
+                <a href="../6.Terraform命令行/6.destroy.html">
+            
+                    
+                        <b>1.7.6.</b>
+                    
+                    destroy
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.7" data-path="../6.Terraform命令行/7.fmt.html">
+            
+                <a href="../6.Terraform命令行/7.fmt.html">
+            
+                    
+                        <b>1.7.7.</b>
+                    
+                    fmt
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.8" data-path="../6.Terraform命令行/8.force-unlock.html">
+            
+                <a href="../6.Terraform命令行/8.force-unlock.html">
+            
+                    
+                        <b>1.7.8.</b>
+                    
+                    force-unlock
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.9" data-path="../6.Terraform命令行/9.get.html">
+            
+                <a href="../6.Terraform命令行/9.get.html">
+            
+                    
+                        <b>1.7.9.</b>
+                    
+                    get
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.10" data-path="../6.Terraform命令行/10.graph.html">
+            
+                <a href="../6.Terraform命令行/10.graph.html">
+            
+                    
+                        <b>1.7.10.</b>
+                    
+                    graph
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.11" data-path="../6.Terraform命令行/11.import.html">
+            
+                <a href="../6.Terraform命令行/11.import.html">
+            
+                    
+                        <b>1.7.11.</b>
+                    
+                    import
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.12" data-path="../6.Terraform命令行/12.init.html">
+            
+                <a href="../6.Terraform命令行/12.init.html">
+            
+                    
+                        <b>1.7.12.</b>
+                    
+                    init
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.13" data-path="../6.Terraform命令行/13.output.html">
+            
+                <a href="../6.Terraform命令行/13.output.html">
+            
+                    
+                        <b>1.7.13.</b>
+                    
+                    output
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.14" data-path="../6.Terraform命令行/14.plan.html">
+            
+                <a href="../6.Terraform命令行/14.plan.html">
+            
+                    
+                        <b>1.7.14.</b>
+                    
+                    plan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15" data-path="../6.Terraform命令行/15.providers/">
+            
+                <a href="../6.Terraform命令行/15.providers/">
+            
+                    
+                        <b>1.7.15.</b>
+                    
+                    providers
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.15.1" data-path="../6.Terraform命令行/15.providers/1.mirror.html">
+            
+                <a href="../6.Terraform命令行/15.providers/1.mirror.html">
+            
+                    
+                        <b>1.7.15.1.</b>
+                    
+                    mirror
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15.2" data-path="../6.Terraform命令行/15.providers/2.schema.html">
+            
+                <a href="../6.Terraform命令行/15.providers/2.schema.html">
+            
+                    
+                        <b>1.7.15.2.</b>
+                    
+                    schema
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.15.3" data-path="../6.Terraform命令行/15.providers/3.lock.html">
+            
+                <a href="../6.Terraform命令行/15.providers/3.lock.html">
+            
+                    
+                        <b>1.7.15.3.</b>
+                    
+                    lock
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.16" data-path="../6.Terraform命令行/16.refresh.html">
+            
+                <a href="../6.Terraform命令行/16.refresh.html">
+            
+                    
+                        <b>1.7.16.</b>
+                    
+                    refresh
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.17" data-path="../6.Terraform命令行/17.show.html">
+            
+                <a href="../6.Terraform命令行/17.show.html">
+            
+                    
+                        <b>1.7.17.</b>
+                    
+                    show
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18" data-path="../6.Terraform命令行/18.state/">
+            
+                <a href="../6.Terraform命令行/18.state/">
+            
+                    
+                        <b>1.7.18.</b>
+                    
+                    state
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.18.1" data-path="../6.Terraform命令行/18.state/1.list.html">
+            
+                <a href="../6.Terraform命令行/18.state/1.list.html">
+            
+                    
+                        <b>1.7.18.1.</b>
+                    
+                    list
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.2" data-path="../6.Terraform命令行/18.state/2.mv.html">
+            
+                <a href="../6.Terraform命令行/18.state/2.mv.html">
+            
+                    
+                        <b>1.7.18.2.</b>
+                    
+                    mv
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.3" data-path="../6.Terraform命令行/18.state/3.pull.html">
+            
+                <a href="../6.Terraform命令行/18.state/3.pull.html">
+            
+                    
+                        <b>1.7.18.3.</b>
+                    
+                    pull
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.4" data-path="../6.Terraform命令行/18.state/4.push.html">
+            
+                <a href="../6.Terraform命令行/18.state/4.push.html">
+            
+                    
+                        <b>1.7.18.4.</b>
+                    
+                    push
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.5" data-path="../6.Terraform命令行/18.state/5.replace-provider.html">
+            
+                <a href="../6.Terraform命令行/18.state/5.replace-provider.html">
+            
+                    
+                        <b>1.7.18.5.</b>
+                    
+                    replace-provider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.6" data-path="../6.Terraform命令行/18.state/6.rm.html">
+            
+                <a href="../6.Terraform命令行/18.state/6.rm.html">
+            
+                    
+                        <b>1.7.18.6.</b>
+                    
+                    rm
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.18.7" data-path="../6.Terraform命令行/18.state/7.show.html">
+            
+                <a href="../6.Terraform命令行/18.state/7.show.html">
+            
+                    
+                        <b>1.7.18.7.</b>
+                    
+                    show
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.19" data-path="../6.Terraform命令行/19.taint.html">
+            
+                <a href="../6.Terraform命令行/19.taint.html">
+            
+                    
+                        <b>1.7.19.</b>
+                    
+                    taint
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.20" data-path="../6.Terraform命令行/20.validate.html">
+            
+                <a href="../6.Terraform命令行/20.validate.html">
+            
+                    
+                        <b>1.7.20.</b>
+                    
+                    validate
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.21" data-path="../6.Terraform命令行/21.untaint.html">
+            
+                <a href="../6.Terraform命令行/21.untaint.html">
+            
+                    
+                        <b>1.7.21.</b>
+                    
+                    untaint
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.22" data-path="../6.Terraform命令行/22.workspace/">
+            
+                <a href="../6.Terraform命令行/22.workspace/">
+            
+                    
+                        <b>1.7.22.</b>
+                    
+                    workspace
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.22.1" data-path="../6.Terraform命令行/22.workspace/1.list.html">
+            
+                <a href="../6.Terraform命令行/22.workspace/1.list.html">
+            
+                    
+                        <b>1.7.22.1.</b>
+                    
+                    list
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.22.2" data-path="../6.Terraform命令行/22.workspace/2.select.html">
+            
+                <a href="../6.Terraform命令行/22.workspace/2.select.html">
+            
+                    
+                        <b>1.7.22.2.</b>
+                    
+                    select
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.22.3" data-path="../6.Terraform命令行/22.workspace/3.new.html">
+            
+                <a href="../6.Terraform命令行/22.workspace/3.new.html">
+            
+                    
+                        <b>1.7.22.3.</b>
+                    
+                    new
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.22.4" data-path="../6.Terraform命令行/22.workspace/4.delete.html">
+            
+                <a href="../6.Terraform命令行/22.workspace/4.delete.html">
+            
+                    
+                        <b>1.7.22.4.</b>
+                    
+                    delete
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.22.5" data-path="../6.Terraform命令行/22.workspace/5.show.html">
+            
+                <a href="../6.Terraform命令行/22.workspace/5.show.html">
+            
+                    
+                        <b>1.7.22.5.</b>
+                    
+                    show
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.23" data-path="../6.Terraform命令行/23.test.html">
+            
+                <a href="../6.Terraform命令行/23.test.html">
+            
+                    
+                        <b>1.7.23.</b>
+                    
+                    test
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../7.test/">
+            
+                <a href="../7.test/">
+            
+                    
+                        <b>1.8.</b>
+                    
+                    Terraform Test
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="./">
+            
+                <a href="./">
+            
+                    
+                        <b>1.9.</b>
+                    
+                    Aha——会心一击
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="1.有条件创建.html">
+            
+                <a href="1.有条件创建.html">
+            
+                    
+                        <b>1.9.1.</b>
+                    
+                    有条件创建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="2.依赖反转.html">
+            
+                <a href="2.依赖反转.html">
+            
+                    
+                        <b>1.9.2.</b>
+                    
+                    依赖反转
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="3.多可用区分布.html">
+            
+                <a href="3.多可用区分布.html">
+            
+                    
+                        <b>1.9.3.</b>
+                    
+                    多可用区分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="4.provisioner与user_data.html">
+            
+                <a href="4.provisioner与user_data.html">
+            
+                    
+                        <b>1.9.4.</b>
+                    
+                    provisioner与user_data
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="5.destroy-provisioner中使用变量.html">
+            
+                <a href="5.destroy-provisioner中使用变量.html">
+            
+                    
+                        <b>1.9.5.</b>
+                    
+                    destroy-provisioner中使用变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="6.利用null_resource的triggers触发其他资源更新.html">
+            
+                <a href="6.利用null_resource的triggers触发其他资源更新.html">
+            
+                    
+                        <b>1.9.6.</b>
+                    
+                    利用null_resource的triggers触发其他资源更新
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="7.利用null_resource搭配replace_triggered_by更新无法读取的属性.html">
+            
+                <a href="7.利用null_resource搭配replace_triggered_by更新无法读取的属性.html">
+            
+                    
+                        <b>1.9.7.</b>
+                    
+                    利用 null_resource 搭配 replace_triggered_by 更新无法从服务端读取内容的属性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="8.创建资源的条件依赖另一个资源的输出时怎么办.html">
+            
+                <a href="8.创建资源的条件依赖另一个资源的输出时怎么办.html">
+            
+                    
+                        <b>1.9.8.</b>
+                    
+                    创建资源的条件依赖另一个资源的输出时怎么办
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9.9" data-path="9.利用create_before_destroy调整资源update执行的顺序.html">
+            
+                <a href="9.利用create_before_destroy调整资源update执行的顺序.html">
+            
+                    
+                        <b>1.9.9.</b>
+                    
+                    利用 create_before_destroy 调整资源 Update 的执行顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="10.terraform与自动化.html">
+            
+                <a href="10.terraform与自动化.html">
+            
+                    
+                        <b>1.9.10.</b>
+                    
+                    Terraform 与自动化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="11.CloudPosse最佳实践.html">
+            
+                <a href="11.CloudPosse最佳实践.html">
+            
+                    
+                        <b>1.9.11.</b>
+                    
+                    来自CloudPosse的Terraform最佳实践
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                        <b>1.10.</b>
+                    
+                    后记
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../9.后记/1.第一版后记.html">
+            
+                <a href="../9.后记/1.第一版后记.html">
+            
+                    
+                        <b>1.10.1.</b>
+                    
+                    第一版后记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../9.后记/2.第二版后记.html">
+            
+                <a href="../9.后记/2.第二版后记.html">
+            
+                    
+                        <b>1.10.2.</b>
+                    
+                    第二版后记
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >利用 create_before_destroy 调整资源 Update 的执行顺序</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#&#x5229;&#x7528;-createbeforedestroy-&#x8C03;&#x6574;&#x8D44;&#x6E90;-update-&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;"><b>1.9.9.1. </b>&#x5229;&#x7528; create_before_destroy &#x8C03;&#x6574;&#x8D44;&#x6E90; Update &#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;</a></li></ul></div><a href="#&#x5229;&#x7528;-createbeforedestroy-&#x8C03;&#x6574;&#x8D44;&#x6E90;-update-&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="&#x5229;&#x7528;-createbeforedestroy-&#x8C03;&#x6574;&#x8D44;&#x6E90;-update-&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;"><a name="&#x5229;&#x7528;-createbeforedestroy-&#x8C03;&#x6574;&#x8D44;&#x6E90;-update-&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;" class="anchor-navigation-ex-anchor" href="#&#x5229;&#x7528;-createbeforedestroy-&#x8C03;&#x6574;&#x8D44;&#x6E90;-update-&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;"><i class="fa fa-link" aria-hidden="true"></i></a>1.9.9.1. &#x5229;&#x7528; create_before_destroy &#x8C03;&#x6574;&#x8D44;&#x6E90; Update &#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;</h1>
+<p>&#x6700;&#x8FD1;&#x5904;&#x7406;&#x4E86;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6709;&#x4EBA;&#x5199;&#x4E86;&#x8FD9;&#x6837;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre class="language-"><code class="lang-hcl"><span class="token keyword">provider<span class="token type variable"> &quot;azurerm&quot; </span></span><span class="token punctuation">{</span>
+  <span class="token keyword">features</span> <span class="token punctuation">{</span>
+    <span class="token keyword">resource_group</span> <span class="token punctuation">{</span>
+      <span class="token property">prevent_deletion_if_contains_resources</span> <span class="token punctuation">=</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">resource <span class="token type variable">&quot;azurerm_resource_group&quot;</span></span> <span class="token string">&quot;rg&quot;</span> <span class="token punctuation">{</span>
+  <span class="token property">location</span> <span class="token punctuation">=</span> <span class="token string">&quot;eastus&quot;</span>
+  <span class="token property">name</span>     <span class="token punctuation">=</span> <span class="token string">&quot;example&quot;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">locals</span> <span class="token punctuation">{</span>
+  <span class="token property">environments</span> <span class="token punctuation">=</span> toset(<span class="token punctuation">[</span><span class="token string">&quot;one&quot;</span>, <span class="token string">&quot;two&quot;</span>, <span class="token string">&quot;three&quot;</span><span class="token punctuation">]</span>)
+<span class="token punctuation">}</span>
+
+<span class="token keyword">resource <span class="token type variable">&quot;azurerm_public_ip&quot;</span></span> <span class="token string">&quot;lb&quot;</span> <span class="token punctuation">{</span>
+  <span class="token property">for_each</span> <span class="token punctuation">=</span> local.environments
+
+  <span class="token property">name</span>                <span class="token punctuation">=</span> <span class="token string">&quot;frontend-lb-<span class="token interpolation"><span class="token punctuation">$</span><span class="token punctuation">{</span>each<span class="token punctuation">.</span>key<span class="token punctuation">}</span></span>&quot;</span>
+  <span class="token property">location</span>            <span class="token punctuation">=</span> azurerm_resource_group.rg.location
+  <span class="token property">resource_group_name</span> <span class="token punctuation">=</span> azurerm_resource_group.rg.name
+  <span class="token property">allocation_method</span>   <span class="token punctuation">=</span> <span class="token string">&quot;Static&quot;</span>
+  <span class="token property">ip_version</span>          <span class="token punctuation">=</span> <span class="token string">&quot;IPv4&quot;</span>
+  <span class="token property">sku</span>                 <span class="token punctuation">=</span> <span class="token string">&quot;Standard&quot;</span>
+  <span class="token property">zones</span>               <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">resource <span class="token type variable">&quot;azurerm_lb&quot;</span></span> <span class="token string">&quot;this&quot;</span> <span class="token punctuation">{</span>
+  <span class="token property">name</span>                <span class="token punctuation">=</span> <span class="token string">&quot;azurelb&quot;</span>
+  <span class="token property">location</span>            <span class="token punctuation">=</span> azurerm_resource_group.rg.location
+  <span class="token property">resource_group_name</span> <span class="token punctuation">=</span> azurerm_resource_group.rg.name
+  <span class="token property">sku</span>                 <span class="token punctuation">=</span> <span class="token string">&quot;Standard&quot;</span>
+
+  dynamic <span class="token string">&quot;frontend_ip_configuration&quot;</span> <span class="token punctuation">{</span>
+    <span class="token property">for_each</span> <span class="token punctuation">=</span> local.environments
+    <span class="token keyword">content</span> <span class="token punctuation">{</span>
+      <span class="token property">name</span>                 <span class="token punctuation">=</span> frontend_ip_configuration.key
+      <span class="token property">public_ip_address_id</span> <span class="token punctuation">=</span> azurerm_public_ip.lb<span class="token punctuation">[</span>frontend_ip_configuration.key<span class="token punctuation">]</span>.id
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5F53;&#x4ED6;&#x4ECE; <code>local.environments</code> &#x4E2D;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x7136;&#x540E;&#x6267;&#x884C; <code>terraform apply</code> &#x65F6;&#xFF0C;&#x4ED6;&#x9047;&#x5230;&#x4E86;&#x4E0B;&#x9762;&#x7684;&#x95EE;&#x9898;&#xFF1A;</p>
+<pre class="language-"><code class="lang-text">&#x2502; Error: deleting Public Ip Address: (Name &quot;azurelb&quot; / Resource Group &quot;example&quot;): network.PublicIPAddressesClient#Delete: Failure sending request: StatusCode=400 -- Original Error: Code=&quot;PublicIPAddressCannotBeDeleted&quot; Message=&quot;Public IP address /subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.Network/publicIPAddresses/one can not be deleted since it is still allocated to resource /subscriptions/subscription-id/resourceGroups/resource-group/providers/Microsoft.Network/loadBalancers/azurelb/frontendIPConfigurations/one. In order to delete the public IP, disassociate/detach the Public IP address from the resource.  To learn how to do this, see aka.ms/deletepublicip.&quot; Details=[]
+</code></pre>
+<p>&#x8FD9;&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x4E2A;&#x8FD8;&#x633A;&#x5E38;&#x89C1;&#x7684;&#x95EE;&#x9898;&#xFF0C;<code>azurerm_lb.this</code> &#x4F9D;&#x8D56;&#x4E8E; <code>azurerm_public_ip.lb[index]</code>&#xFF0C;&#x6B63;&#x786E;&#x7684;&#x53D8;&#x66F4;&#x987A;&#x5E8F;&#x5E94;&#x8BE5;&#x662F;&#x5148;&#x66F4;&#x65B0; <code>azurerm_lb.this</code>&#xFF0C;&#x518D;&#x5220;&#x9664; <code>azurerm_public_ip.lb</code> &#x7684;&#x6210;&#x5458;&#xFF0C;&#x4F46;&#x662F; Terraform &#x9ED8;&#x8BA4;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x4F1A;&#x9996;&#x5148;&#x5C1D;&#x8BD5;&#x6267;&#x884C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x65F6;&#x56E0;&#x4E3A; ip &#x4ECD;&#x7136;&#x88AB; LoadBalancer &#x4F7F;&#x7528;&#x7740;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x5F15;&#x53D1;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x662F;&#x7ED9; <code>azurerm_public.lb</code> &#x6DFB;&#x52A0;&#x4E00;&#x4E2A; <code>create_before_destroy</code>&#xFF1A;</p>
+<pre class="language-"><code class="lang-hcl"><span class="token keyword">resource <span class="token type variable">&quot;azurerm_public_ip&quot;</span></span> <span class="token string">&quot;lb&quot;</span> <span class="token punctuation">{</span>
+  <span class="token property">for_each</span> <span class="token punctuation">=</span> local.environments
+
+  <span class="token property">name</span>                <span class="token punctuation">=</span> <span class="token string">&quot;frontend-lb-<span class="token interpolation"><span class="token punctuation">$</span><span class="token punctuation">{</span>each<span class="token punctuation">.</span>key<span class="token punctuation">}</span></span>&quot;</span>
+  <span class="token property">location</span>            <span class="token punctuation">=</span> azurerm_resource_group.rg.location
+  <span class="token property">resource_group_name</span> <span class="token punctuation">=</span> azurerm_resource_group.rg.name
+  <span class="token property">allocation_method</span>   <span class="token punctuation">=</span> <span class="token string">&quot;Static&quot;</span>
+  <span class="token property">ip_version</span>          <span class="token punctuation">=</span> <span class="token string">&quot;IPv4&quot;</span>
+  <span class="token property">sku</span>                 <span class="token punctuation">=</span> <span class="token string">&quot;Standard&quot;</span>
+  <span class="token property">zones</span>               <span class="token punctuation">=</span> <span class="token punctuation">[</span><span class="token number">1</span>, <span class="token number">2</span>, <span class="token number">3</span><span class="token punctuation">]</span>
+
+  <span class="token keyword">lifecycle</span> <span class="token punctuation">{</span>
+    <span class="token property">create_before_destroy</span> <span class="token punctuation">=</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p><code>create_before_destroy</code> &#x540D;&#x5B57;&#x91CC;&#x867D;&#x7136;&#x770B;&#x8D77;&#x6765;&#x662F;&#x4E0E; Create &#x6709;&#x5173;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5B83;&#x4E5F;&#x4F1A;&#x5C06; Update &#x4E0E; Create &#x653E;&#x5728;&#x4E00;&#x8D77;&#x8C03;&#x6574;&#xFF0C;&#x58F0;&#x660E;&#x8BE5;&#x53C2;&#x6570;&#x540E;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5C06; <code>azurerm_public_ip.lb</code> &#x7684; Delete &#x63A8;&#x8FDF;&#x5230;&#x6267;&#x884C; Update &#x4E4B;&#x540E;&#x518D;&#x6267;&#x884C;&#x4E86;&#xFF0C;&#x8BE5;&#x95EE;&#x9898;&#x5F97;&#x89E3;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="8.创建资源的条件依赖另一个资源的输出时怎么办.html" class="navigation navigation-prev " aria-label="Previous page: 创建资源的条件依赖另一个资源的输出时怎么办">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="10.terraform与自动化.html" class="navigation navigation-next " aria-label="Next page: Terraform 与自动化">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"利用 create_before_destroy 调整资源 Update 的执行顺序","level":"1.9.9","depth":2,"next":{"title":"Terraform 与自动化","level":"1.9.10","depth":2,"path":"8.技巧/10.terraform与自动化.md","ref":"8.技巧/10.terraform与自动化.md","articles":[]},"previous":{"title":"创建资源的条件依赖另一个资源的输出时怎么办","level":"1.9.8","depth":2,"path":"8.技巧/8.创建资源的条件依赖另一个资源的输出时怎么办.md","ref":"8.技巧/8.创建资源的条件依赖另一个资源的输出时怎么办.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-highlight","prism","prism-themes","fontsettings","sharing","-lunr","-search","search-pro","livereload","image-captions","sitemap-general","anchor-navigation-ex","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{"css":["prism-themes/themes/prism-vsc-dark-plus.css"],"lang":{"shell":"bash","cmd":"bash"}},"livereload":{},"search-pro":{},"sitemap-general":{"prefix":"https://lonegunmanb.github.io/introduction-terraform/"},"fontsettings":{"family":"sans","size":2,"theme":"white"},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":true},"prism-themes":{},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":true},"image-captions":{"caption":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","variable_name":"_pictures"}},"theme":"default","author":"大可不加冰","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{"_pictures":[{"backlink":"index.html#fig1.1.1","level":"1.1","list_caption":"Figure: Nomad、Consul、Vault、Terraform 组成的 HashiStack","alt":"Nomad、Consul、Vault、Terraform 组成的 HashiStack","nro":1,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-13/1605243540985-image.png","index":1,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Nomad、Consul、Vault、Terraform 组成的 HashiStack","attributes":{},"skip":false,"key":"1.1.1"},{"backlink":"index.html#fig1.1.2","level":"1.1","list_caption":"Figure: Terraform 著名教材《Terraform Up & Running》，建议直接阅读第二版","alt":"Terraform 著名教材《Terraform Up & Running》，建议直接阅读第二版","nro":2,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-12-23/1608689176373-image.png","index":2,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Terraform 著名教材《Terraform Up & Running》，建议直接阅读第二版","attributes":{},"skip":false,"key":"1.1.2"},{"backlink":"2.Terraform基础概念/1.Provider.html#fig1.3.1.1","level":"1.3.1","list_caption":"Figure: Terraform通过RPC调用插件，插件代码通过调用SDK操作远程资源","alt":"Terraform通过RPC调用插件，插件代码通过调用SDK操作远程资源","nro":3,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-16/1605496195438-image.png","index":1,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Terraform通过RPC调用插件，插件代码通过调用SDK操作远程资源","attributes":{},"skip":false,"key":"1.3.1.1"},{"backlink":"2.Terraform基础概念/1.Provider.html#fig1.3.1.2","level":"1.3.1","list_caption":"Figure: registry.terraform.io上的插件页面","alt":"registry.terraform.io上的插件页面","nro":4,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-19/1605799350775-image.png","index":2,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"registry.terraform.io上的插件页面","attributes":{},"skip":false,"key":"1.3.1.2"},{"backlink":"2.Terraform基础概念/1.Provider.html#fig1.3.1.3","level":"1.3.1","list_caption":"Figure: registry.terraform.io的搜索页面","alt":"registry.terraform.io的搜索页面","nro":5,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-16/1605498907942-image.png","index":3,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"registry.terraform.io的搜索页面","attributes":{},"skip":false,"key":"1.3.1.3"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.1","level":"1.3.2","list_caption":"Figure: Consul的GUI界面","alt":"Consul的GUI界面","nro":6,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240220224455.png","index":1,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Consul的GUI界面","attributes":{},"skip":false,"key":"1.3.2.1"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.2","level":"1.3.2","list_caption":"Figure: Consul 中可以看到名为 `localstack-aws` 的键","alt":"Consul 中可以看到名为 `localstack-aws` 的键","nro":7,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240220230042.png","index":2,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Consul 中可以看到名为 `localstack-aws` 的键","attributes":{},"skip":false,"key":"1.3.2.2"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.3","level":"1.3.2","list_caption":"Figure: 键的内容","alt":"键的内容","nro":8,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240220230136.png","index":3,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"键的内容","attributes":{},"skip":false,"key":"1.3.2.3"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.4","level":"1.3.2","list_caption":"Figure: 键依然存在","alt":"键依然存在","nro":9,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240220230312.png","index":4,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"键依然存在","attributes":{},"skip":false,"key":"1.3.2.4"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.5","level":"1.3.2","list_caption":"Figure: 内容已被清空","alt":"内容已被清空","nro":10,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240220230350.png","index":5,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"内容已被清空","attributes":{},"skip":false,"key":"1.3.2.5"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.6","level":"1.3.2","list_caption":"Figure: 多了一个同名的文件夹","alt":"多了一个同名的文件夹","nro":11,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225100309.png","index":6,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"多了一个同名的文件夹","attributes":{},"skip":false,"key":"1.3.2.6"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.7","level":"1.3.2","list_caption":"Figure: localstack-aws 文件夹内部","alt":"localstack-aws 文件夹内部","nro":12,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225100354.png","index":7,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"localstack-aws 文件夹内部","attributes":{},"skip":false,"key":"1.3.2.7"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.8","level":"1.3.2","list_caption":"Figure: `.lock` 内容","alt":"`.lock` 内容","nro":13,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225180803.png","index":8,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"`.lock` 内容","attributes":{},"skip":false,"key":"1.3.2.8"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.9","level":"1.3.2","list_caption":"Figure: `.lockinfo` 内容","alt":"`.lockinfo` 内容","nro":14,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225180852.png","index":9,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"`.lockinfo` 内容","attributes":{},"skip":false,"key":"1.3.2.9"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.10","level":"1.3.2","list_caption":"Figure: 重新访问Consul","alt":"重新访问Consul","nro":15,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225101100.png","index":10,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"重新访问Consul","attributes":{},"skip":false,"key":"1.3.2.10"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.11","level":"1.3.2","list_caption":"Figure: 将代码复制到不同的文件夹中保存","alt":"将代码复制到不同的文件夹中保存","nro":16,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-17/1605571444613-image.png","index":11,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"将代码复制到不同的文件夹中保存","attributes":{},"skip":false,"key":"1.3.2.11"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.12","level":"1.3.2","list_caption":"Figure: 重新访问 Consul，目前有一个键","alt":"重新访问 Consul，目前有一个键","nro":17,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225174932.png","index":12,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"重新访问 Consul，目前有一个键","attributes":{},"skip":false,"key":"1.3.2.12"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.13","level":"1.3.2","list_caption":"Figure: Consul 中多了一个 `localstack-aws-env:feature1`","alt":"Consul 中多了一个 `localstack-aws-env:feature1`","nro":18,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225175538.png","index":13,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Consul 中多了一个 `localstack-aws-env:feature1`","attributes":{},"skip":false,"key":"1.3.2.13"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.14","level":"1.3.2","list_caption":"Figure: 此时 `localstack-aws-env:feature1` 的内容","alt":"此时 `localstack-aws-env:feature1` 的内容","nro":19,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225175806.png","index":14,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"此时 `localstack-aws-env:feature1` 的内容","attributes":{},"skip":false,"key":"1.3.2.14"},{"backlink":"2.Terraform基础概念/2.状态管理.html#fig1.3.2.15","level":"1.3.2","list_caption":"Figure: `localstack-aws-env:feature1` 被删除了","alt":"`localstack-aws-env:feature1` 被删除了","nro":20,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/20240225180126.png","index":15,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"`localstack-aws-env:feature1` 被删除了","attributes":{},"skip":false,"key":"1.3.2.15"},{"backlink":"6.Terraform命令行/10.graph.html#fig1.7.10.1","level":"1.7.10","list_caption":"Figure: 生成的依赖图","alt":"生成的依赖图","nro":21,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2020-11-25/1606272727693-image.png","index":1,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"生成的依赖图","attributes":{},"skip":false,"key":"1.7.10.1"},{"backlink":"8.技巧/11.CloudPosse最佳实践.html#fig1.9.11.1","level":"1.9.11","list_caption":"Figure: Terraform 输出值的命名要对称","alt":"Terraform 输出值的命名要对称","nro":22,"url":"https://raw.githubusercontent.com/lonegunmanb/introduction-to-terraform-pic/master/2021-11-28/1638086002974-image.png","index":1,"caption_template":"图 _PAGE_LEVEL_/_PAGE_IMAGE_NUMBER_ - _CAPTION_","label":"Terraform 输出值的命名要对称","attributes":{},"skip":false,"key":"1.9.11.1"}]},"title":"《Terraform入门教程》","gitbook":"*"},"file":{"path":"8.技巧/9.利用create_before_destroy调整资源update执行的顺序.md","mtime":"2024-05-25T00:11:31.219Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2024-07-21T00:02:25.943Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+
