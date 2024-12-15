@@ -16,6 +16,7 @@
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/3.Terraform代码的书写/9.重载文件.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/3.Terraform代码的书写/10.代码风格规范.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/3.Terraform代码的书写/11.checks.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>https://lonegunmanb.github.io/introduction-terraform/3.Terraform代码的书写/12.Ephemeral资源.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/4.Terraform文件与目录/</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/4.Terraform文件与目录/1.override_file.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 <url> <loc>https://lonegunmanb.github.io/introduction-terraform/4.Terraform文件与目录/2.依赖锁文件.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
